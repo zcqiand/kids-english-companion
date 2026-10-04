@@ -211,6 +211,8 @@ class MasteryEngine:
             "weak": [m["text"] for m in self.weak_words(child_id)],
             "streak": self.streak(child_id, today),
             "stats": {**stats, "total_known": len(all_m)},
-            "recent_events": self.store.recent_events(child_id, limit=20),
+            "recent_events": [
+                {**e, "word": e.get("word_text") or ""} for e in self.store.recent_events(child_id, limit=20)
+            ],
             "activity": activity,
         }

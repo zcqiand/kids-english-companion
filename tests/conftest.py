@@ -1,9 +1,10 @@
-"""共享 fixture：临时库 + 种子内容 + 测试用假 LLM。"""
+"""共享 fixture：临时库 + 种子内容 + 进度引擎。"""
 from __future__ import annotations
 
 import pytest
 
 from kids_english.content import seed_words
+from kids_english.progress import MasteryEngine
 from kids_english.store import Store
 
 
@@ -12,6 +13,11 @@ def store(tmp_path):
     s = Store(str(tmp_path / "test.db"))
     s.seed_words(seed_words())
     return s
+
+
+@pytest.fixture()
+def engine(store):
+    return MasteryEngine(store)
 
 
 @pytest.fixture()

@@ -19,7 +19,7 @@ KIND_ECHO = "echo_attempt"                      # 跟读
 KIND_PRONUNCIATION = "pronunciation_attempt"    # 单词发音练习
 KIND_FREE_USE = "free_use"                      # 孩子在对话里主动用了这个词
 
-_STATUS_CN = {"learning": "学习中", "growing": "巩固中", "mastered": "已掌握"}
+STATUS_CN = {"learning": "学习中", "growing": "巩固中", "mastered": "已掌握"}
 
 
 def status_of(box: int) -> str:
@@ -194,10 +194,10 @@ class MasteryEngine:
         all_m = []
         for m in self.store.list_mastery(child_id):
             row = dict(m)
-            row["status"] = _STATUS_CN[status_of(m["box"])]
+            row["status"] = STATUS_CN[status_of(m["box"])]
             row["weak"] = self._row_weak(m)
             all_m.append(row)
-        stats = {cn: 0 for cn in _STATUS_CN.values()}
+        stats = {cn: 0 for cn in STATUS_CN.values()}
         for row in all_m:
             stats[row["status"]] += 1
         dates = self.store.list_session_dates(child_id)

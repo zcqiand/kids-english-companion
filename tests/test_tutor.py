@@ -93,3 +93,21 @@ def test_end_session_flow(store, engine, child_id):
     assert result["ok"] is True
     again = tutor.end_session(sid)
     assert again.get("already_ended") is True
+
+
+def test_reply_survives_mid_tool_round_crash(store, engine, child_id):
+    """Review Focus 2：第 1 轮工具已执行（副作用已落库），第 2 轮 ask 崩溃 →
+    仍 error+done 收尾，已记事件不回滚。"""
+    llm = FakeLLM(turns=[
+        assistant_msg(tool_calls=[ToolCall(
+            id="call_1", name="record_word_event",
+            arguments={"word": "apple", "kind": "encounter", "success": True},
+        )]),
+        # 脚本耗尽 → 第 2 轮 ask 抛 AssertionError
+    ])
+    events = list(_tutor(store, engine, child_id, llm).reply(None, "I like apple!"))
+    types = [e["type"] for e in events]
+    assert types.count("tool") == 1
+    assert store.get_mastery(child_id, "w_apple") is not None  # 副作用已在
+    assert types[-2] == "error" and "AI 走神了" in events[-2]["message"]
+    assert types[-1] == "done"

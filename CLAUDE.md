@@ -7,14 +7,14 @@
 
 - **TDD**：核心逻辑（进度引擎/工具/Agent 循环）先写失败测试 → 实现 → 绿 → commit。
 - **mock-friendly**：`pip install -e ".[dev]" && pytest -q` 必须在无 Key、无网下全绿（FakeLLM 注入，禁止测试里真调 API）。
-- **版本钉死**：依赖与 `version-lock.json` 一致，不引 lock 外的库（不引 LangGraph/CrewAI/LangChain）。
+- **版本钉死**：依赖与 `version-lock.json` 一致，不引 lock 外的库。编排框架：LangGraph（对话流程图·流程视角，书 ch9）已入 lock；**禁 CrewAI（书 ch9 单框架明令）、禁 langchain 顶层包与 langchain-openai**（langchain-core 仅作 langgraph 传递依赖）。
 - **禁止 env 默认值兜底**：`LLM_MODE` 必填（mock|live）；live 模式下 base_url/api_key/model 缺一即启动报错。
 - **密钥不入库**：key 只在 `.env`（已 gitignore），`.env.example` 放占位符。
 - **只增不改**：扩功能不动现有模块签名/行为。
 
 ## 技术栈（钉死于 version-lock.json）
 
-- 后端：Python 3.10+ / FastAPI / openai SDK（OpenAI 兼容直调：MiniMax-M3，base_url 可配）
+- 后端：Python 3.10+ / FastAPI / **LangGraph**（对话流程图·流程视角）/ openai SDK（OpenAI 兼容直调：MiniMax-M3，base_url 可配）
 - 前端：React 18 + TypeScript + Vite 5（npm 走 registry.npmmirror.com）
 - 存储：SQLite（`data/app.db`，thin DAO，不引 ORM）
 - 语音：浏览器 Web Speech API（STT 转写 + TTS 朗读），无需额外 Key
@@ -41,8 +41,10 @@ src/kids_english/
 ├── agent/
 │   ├── prompts.py   # 人设 + 策略 + 进度卡 组装系统提示词
 │   ├── tools.py     # function calling 工具表与执行
-│   ├── tutor.py     # 对话 Agent 循环（SSE）
-│   └── practice.py  # 跟读/发音评价
+│   ├── graph.py     # ★ 对话流程 LangGraph 图（工具轮状态机 = 节点+条件边）
+│   ├── tutor.py     # 对话 Agent 接线层（图调用 + SSE 队列旁路）
+│   ├── mock_llm.py  # MockLLM（离线演示扮演件）
+│   └── practice.py  # 跟读/发音评价（无循环，不入图）
 └── api/             # 路由：children / chat / practice / meta
 ```
 

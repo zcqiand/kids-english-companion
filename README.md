@@ -59,7 +59,7 @@ live 模式已对 MiniMax-M3 验证：其思维链以 `<think>…</think>` 内�
 
 ## 技术栈
 
-- 后端：Python 3.10+ / FastAPI / openai SDK（OpenAI 兼容直调，不引 LangGraph/CrewAI/LangChain）/ SQLite（thin DAO）
+- 后端：Python 3.10+ / FastAPI / **LangGraph**（对话流程图，书 ch9 单框架）/ openai SDK（OpenAI 兼容直调；禁 langchain 顶层与 langchain-openai）/ SQLite（thin DAO）
 - 前端：React 18 + TypeScript 5.6 + Vite 5，零额外运行时依赖
 - 语音：浏览器 Web Speech API（TTS 朗读 + STT 转写），无需额外 Key
 - 版本钉死于 [version-lock.json](version-lock.json)；npm 依赖以 package-lock.json 实际解析版本为准

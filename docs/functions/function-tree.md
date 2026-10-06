@@ -25,7 +25,7 @@
 
 英语启蒙伙伴：**记得住孩子学习进度**的动画 IP 角色英语启蒙 Agent。
 突出点 = **M01 进度记忆引擎**——所有模块读写同一份掌握度模型，角色对话把到期复习词自然织进对话。
-架构：FastAPI + OpenAI 兼容直调（MiniMax-M3，可配 base_url）+ React 18 前端；不引 LangGraph/CrewAI。
+架构：FastAPI + **LangGraph** 对话流程图（书 ch9 单框架，禁 CrewAI/langchain 顶层）+ OpenAI 兼容直调（MiniMax-M3，可配 base_url）+ React 18 前端。
 书籍映射：《图解AI Agent》第 9 章实战范式（场景需求→架构→代码→运行→优化），场景由「校园助手」改为「英语启蒙」。
 
 ## 模块总览

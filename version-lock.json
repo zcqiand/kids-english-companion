@@ -7,6 +7,7 @@
     "uvicorn": "0.54.0",
     "openai": "2.54.0",
     "pydantic": "2.12.5",
+    "langgraph": "0.5.4",
     "pytest": "9.1.1",
     "httpx": "0.28.1"
   },
@@ -14,7 +15,7 @@
     "type": "openai-compatible",
     "base_url": "https://api.minimaxi.com/v1",
     "model": "MiniMax-M3",
-    "note": "直调 OpenAI 兼容 chat.completions（含 function calling 与流式），不引 LangGraph/CrewAI；key 只放 .env 不入库"
+    "note": "直调 OpenAI 兼容 chat.completions（含 function calling 与流式），编排=LangGraph（v2，书 ch9 单框架）；key 只放 .env 不入库"
   },
   "frontend": {
     "react": "18.3.1",
@@ -25,5 +26,5 @@
     "@types/react": "18.3.31",
     "registry": "registry.npmmirror.com"
   },
-  "notes": "升级任何依赖前先改这里与 pyproject/package-lock 同 commit；tests 必须在无 Key 无网下全绿（FakeLLM）。前端 npm 依赖以 package-lock.json 实际解析版本为准，与本表一致"
+  "notes": "升级任何依赖前先改这里与 pyproject/package-lock 同 commit；tests 必须在无 Key 无网下全绿（FakeLLM）。前端 npm 依赖以 package-lock.json 实际解析版本为准，与本表一致。2026-10-06 v2 编排迁移（复制自 hr-interview 试点）：langgraph 已入 lock，langchain-core 1.4.9 为其传递依赖（不入直接依赖）；禁 crewai/langchain 顶层/langchain-openai"
 }

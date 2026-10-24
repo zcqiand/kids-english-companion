@@ -80,3 +80,17 @@ TTS/STT 用 Web Speech API：
 ## 开发约定
 
 见 [CLAUDE.md](CLAUDE.md)：TDD、mock-friendly（无 Key 无网 `pytest -q` 全绿）、版本钉死、env 无默认兜底、密钥只放 `.env` 不入库、功能树锚点 `docs/functions/function-tree.md`。
+
+## 配套书籍及章节映射
+
+> 同一案例仓后续接入其他书籍时，在此节下新增书籍小节。
+
+### 书一《图解AI Agent：从零开始开发多场景应用》（卷四）
+
+- 书稿定位：xr-know-015，第 9 章正文代码块挂本仓 `source=` 锚点
+- 配套版本：`v2.0.0-20261006`（registry 冻结 tag，代码以此为准）
+
+| 章 | 章题 | 对应源文件 |
+| :--- | :--- | :--- |
+| 9 | 英语启蒙 | `frontend/src/App.tsx` + `frontend/src/api.ts` + `frontend/src/pages/Chat.tsx` + `frontend/src/pages/KidSelect.tsx` + `frontend/src/pages/ParentBoard.tsx` + `frontend/src/pages/Pronunciation.tsx` + `frontend/src/pages/Readalong.tsx` + `frontend/src/speech.ts` + `src/kids_english/agent/graph.py` + `src/kids_english/agent/mock_llm.py` + `src/kids_english/agent/practice.py` + `src/kids_english/agent/prompts.py` + `src/kids_english/agent/tools.py` + `src/kids_english/agent/tutor.py` + `src/kids_english/api/chat.py` + `src/kids_english/api/children.py` + `src/kids_english/api/helpers.py` + `src/kids_english/api/meta.py` + `src/kids_english/api/practice.py` + `src/kids_english/characters.py` + `src/kids_english/config.py` + `src/kids_english/content.py` + `src/kids_english/llm.py` + `src/kids_english/main.py` + `src/kids_english/progress.py` + `src/kids_english/store.py` |
+
